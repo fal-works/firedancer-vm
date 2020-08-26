@@ -1,6 +1,6 @@
 # Firedancer VM
 
-Virtual machine for **Firedancer**, a Haxe based language for defining 2D shmup bullet-hell patterns. 
+Virtual machine for [**Firedancer**](https://github.com/fal-works/firedancer), a Haxe based language for defining 2D shmup bullet-hell patterns. 
 
 
 ## Compiler flags
