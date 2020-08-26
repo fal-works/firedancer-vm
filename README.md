@@ -17,13 +17,16 @@ Example: `-D firedancer_positionref_type=broker_BatchSprite`
 
 Valid values:
 
-- "broker_BatchSprite" for `broker.draw.BatchSprite`
-- "heaps_BatchElement" for `h2d.SpriteBatch.BatchElement`
-- Otherwise an anonymous structure `{ x: Float, y: Float }`
+- `broker_BatchSprite` for using `broker.draw.BatchSprite`
+- `heaps_BatchElement` for using `h2d.SpriteBatch.BatchElement`
+- Otherwise uses an anonymous structure `{ x: Float, y: Float }`
 
 ### `-D firedancer_debug`
 
-Detects infinite loops in the `Vm`.
+Throws error if:
+
+- infinite loop is detected in the `Vm`
+- unknown `Opcode` is detected in a `Program`
 
 
 ## Dependencies

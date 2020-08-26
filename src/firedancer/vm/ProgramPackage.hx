@@ -34,7 +34,7 @@ class ProgramPackage {
 		@return `Program` registered with `name`.
 	**/
 	public function getProgramByName(name: String): Program {
-		#if debug
+		#if (debug || firedancer_debug)
 		if (!this.nameIdMap.hasKey(name)) throw 'Program not found: $name';
 		#end
 
