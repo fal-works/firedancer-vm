@@ -20,7 +20,7 @@ class TmpVelocity {
 		@param vx The x-coordinate of the current velocity.
 		@param vy The y-coordinate of the current velocity.
 	**/
-	public extern inline function new(vx: Float, vy: Float) {
+	public #if !js extern #end inline function new(vx: Float, vy: Float) {
 		this.x = vx;
 		this.y = vy;
 	}

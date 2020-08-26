@@ -3,9 +3,9 @@ package firedancer.vm.internal;
 import haxe.Int32;
 import firedancer.vm.Opcode;
 import firedancer.vm.Constants.*;
-
 #if firedancer_verbose
 import sneaker.print.Printer;
+
 using firedancer.vm.OpcodeExtension;
 #end
 
@@ -38,7 +38,7 @@ class Scanner {
 	var scanCount: UInt;
 	#end
 
-	public extern inline function new() {}
+	public #if hl extern #end inline function new() {}
 
 	/**
 		Resets `this` scanner according to the current status of `thread`.
@@ -57,7 +57,11 @@ class Scanner {
 		Reads the next opcode.
 	**/
 	public extern inline function opcode(): Opcode {
+		#if hl
 		final opcode: Opcode = cast untyped $bgetui8(code, pc);
+		#else
+		final opcode: Opcode = cast code.getUI8(pc);
+		#end
 
 		#if firedancer_verbose
 		println('${opcode.toString()} (pos: $pc)');
@@ -76,8 +80,14 @@ class Scanner {
 		Reads the next integer immediate.
 	**/
 	public extern inline function int(): Int32 {
+		#if hl
 		final value: Int32 = untyped $bgeti32(code, pc);
+		#else
+		final value: Int32 = code.getI32(pc);
+		#end
+
 		pc += IntSize;
+
 		return value;
 	}
 
@@ -85,8 +95,14 @@ class Scanner {
 		Reads the next float immediate.
 	**/
 	public extern inline function float(): Float {
+		#if hl
 		final value: Float = untyped $bgetf64(code, pc);
+		#else
+		final value: Float = code.getF64(pc);
+		#end
+
 		pc += FloatSize;
+
 		return value;
 	}
 

@@ -37,7 +37,7 @@ class TmpPosition {
 		@param originPositionRefVec The vector that contains `originPositionRef`.
 		@param vecIndex The index of `originPositionRef` in `originPositionRefVec`.
 	**/
-	public extern inline function new(
+	public #if !js extern #end inline function new(
 		x: Float,
 		y: Float,
 		originPositionRef: Maybe<PositionRef>,
