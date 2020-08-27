@@ -71,7 +71,7 @@ abstract Opcode(Int) {
 		this = v;
 
 	extern inline function get_category() {
-		#if (debug || firedancer_debug)
+		#if firedancer_debug
 		final code = this >>> opBitCount;
 		if (code & ~b00000011 != 0) throw 'Invalid opcode: $this';
 		return cast code;

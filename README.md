@@ -28,6 +28,8 @@ Throws error if:
 - infinite loop is detected in the `Vm`
 - unknown `Opcode` is detected in a `Program`
 
+Automatically set `#if debug`.
+
 
 ## Dependencies
 

@@ -248,7 +248,7 @@ class Vm {
 							Debugger.dump(scan, mem, reg);
 						}
 
-						#if (debug || firedancer_debug)
+						#if firedancer_debug
 						case other:
 							throw 'Unknown general opcode: $other';
 						#end
@@ -367,7 +367,7 @@ class Vm {
 					case AddFloatVRV:
 						mem.addLocalFloat(scan.int(), reg.float);
 
-						#if (debug || firedancer_debug)
+						#if firedancer_debug
 						case other:
 							throw 'Unknown calc opcode: $other';
 						#end
@@ -489,7 +489,7 @@ class Vm {
 							reg.float
 						);
 
-						#if (debug || firedancer_debug)
+						#if firedancer_debug
 						case other:
 							throw 'Unknown read opcode: $other';
 						#end
@@ -622,7 +622,7 @@ class Vm {
 					case AddShotDirectionS:
 						thread.addShotDirection(mem.peekFloat());
 
-						#if (debug || firedancer_debug)
+						#if firedancer_debug
 						case other: throw 'Unknown write opcode: $other';
 						#end
 					}

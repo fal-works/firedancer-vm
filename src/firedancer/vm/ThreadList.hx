@@ -67,7 +67,7 @@ abstract ThreadList(Vector<Thread>) {
 			++i;
 		} while (i < len);
 
-		#if (debug || firedancer_debug)
+		#if firedancer_debug
 		if (index.isNone()) throw fullError();
 		#end
 
