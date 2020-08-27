@@ -1,5 +1,6 @@
 package firedancer.vm;
 
+import haxe.Json;
 import banker.vector.Vector;
 import banker.map.ArrayMap;
 
@@ -47,4 +48,28 @@ class ProgramPackage {
 		final id = this.nameIdMap.get(name);
 		return this.programTable[id];
 	}
+
+	/**
+		Converts `this` to JSON string.
+	**/
+	public function toString(): String {
+		final nameIdMap = new Map<String, UInt>();
+		this.nameIdMap.forEach((key, value) -> nameIdMap.set(key, value));
+		final programTable = this.programTable.ref.map(Program.serialize).toArray();
+
+		final obj: ProgramPackageObject = {
+			vmVersion: this.vmVersion,
+			programTable: programTable,
+			nameIdMap: nameIdMap
+		};
+
+		final json = Json.stringify(obj, null, "  ");
+		return json.toString();
+	}
+}
+
+private typedef ProgramPackageObject = {
+	final vmVersion: String;
+	final programTable: Array<String>;
+	final nameIdMap: Dynamic;
 }

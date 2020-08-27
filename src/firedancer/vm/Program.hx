@@ -1,5 +1,6 @@
 package firedancer.vm;
 
+import haxe.Serializer;
 import banker.binary.Bytes;
 
 /**
@@ -10,6 +11,16 @@ import banker.binary.Bytes;
 @:notNull @:forward(length, toHex)
 abstract Program(Bytes) from Bytes to Bytes {
 	/**
+		Serializes `program`.
+		@return Serialized data in `String` representation.
+	**/
+	public static function serialize(program: Program): String {
+		final s = new Serializer();
+		s.serialize(program.std());
+		return s.toString();
+	}
+
+	/**
 		@return Null object for `Program`.
 	**/
 	public static function createEmpty()
@@ -19,6 +30,12 @@ abstract Program(Bytes) from Bytes to Bytes {
 		Provides access to the bytecode.
 	**/
 	public var data(get, never): Bytecode;
+
+	/**
+		Casts `this` to the standard `haxe.io.Bytes`.
+	**/
+	public inline function std(): haxe.io.Bytes
+		return this.std();
 
 	/**
 		@return Hexadecimal representation of `this` with each byte separated.
