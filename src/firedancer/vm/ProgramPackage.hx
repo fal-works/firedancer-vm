@@ -10,6 +10,11 @@ using banker.type_extension.MapExtension;
 **/
 class ProgramPackage {
 	/**
+		The version of `firedancer-vm` that should be compatible with `this` package.
+	**/
+	public final vmVersion: String;
+
+	/**
 		Table for retrieving `Program` by ID number.
 	**/
 	public final programTable: Vector<Program>;
@@ -23,6 +28,7 @@ class ProgramPackage {
 		programList: Vector<Program>,
 		nameIdMapping: Map<String, UInt>
 	) {
+		this.vmVersion = CompilerFlags.version.get();
 		this.programTable = programList;
 
 		final nameIdMap = new ArrayMap<String, UInt>(nameIdMapping.countKeys());
