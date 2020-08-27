@@ -1,6 +1,7 @@
 package firedancer.vm;
 
 import haxe.Serializer;
+import haxe.Unserializer;
 import banker.binary.Bytes;
 
 /**
@@ -10,6 +11,12 @@ import banker.binary.Bytes;
 **/
 @:notNull @:forward(length, toHex)
 abstract Program(Bytes) from Bytes to Bytes {
+	/**
+		@return `Program` instance deserialized from `s`.
+	**/
+	public static function deserialize(s: String): Program
+		return Unserializer.run(s);
+
 	/**
 		Serializes `program`.
 		@return Serialized data in `String` representation.

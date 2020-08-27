@@ -11,6 +11,20 @@ using banker.type_extension.MapExtension;
 **/
 class ProgramPackage {
 	/**
+		Creates a `ProgramPackage` instance from a JSON string.
+		@param jsonText JSON-encoded text. The data should unify `ProgramPackageObject`.
+	**/
+	public static function fromString(jsonText: String): ProgramPackage {
+		final obj: ProgramPackageObject = Json.parse(jsonText);
+		final programTable = Vector.fromArrayCopy(obj.programTable.map(Program.deserialize));
+		final nameIdMap = new Map<String, UInt>();
+		for (name in Reflect.fields(obj.nameIdMap))
+			nameIdMap.set(name, Reflect.field(obj.nameIdMap, name));
+
+		return new ProgramPackage(programTable, nameIdMap, obj.vmVersion);
+	}
+
+	/**
 		The version of `firedancer-vm` that should be compatible with `this` package.
 	**/
 	public final vmVersion: String;
@@ -27,9 +41,10 @@ class ProgramPackage {
 
 	public function new(
 		programList: Vector<Program>,
-		nameIdMapping: Map<String, UInt>
+		nameIdMapping: Map<String, UInt>,
+		?vmVersion: String
 	) {
-		this.vmVersion = CompilerFlags.version.get();
+		this.vmVersion = (vmVersion != null) ? vmVersion : CompilerFlags.version.get();
 		this.programTable = programList;
 
 		final nameIdMap = new ArrayMap<String, UInt>(nameIdMapping.countKeys());
@@ -58,9 +73,9 @@ class ProgramPackage {
 		final programTable = this.programTable.ref.map(Program.serialize).toArray();
 
 		final obj: ProgramPackageObject = {
-			vmVersion: this.vmVersion,
+			nameIdMap: nameIdMap,
 			programTable: programTable,
-			nameIdMap: nameIdMap
+			vmVersion: this.vmVersion
 		};
 
 		final json = Json.stringify(obj, null, "  ");
@@ -69,7 +84,7 @@ class ProgramPackage {
 }
 
 private typedef ProgramPackageObject = {
-	final vmVersion: String;
-	final programTable: Array<String>;
 	final nameIdMap: Dynamic;
+	final programTable: Array<String>;
+	final vmVersion: String;
 }
