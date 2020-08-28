@@ -18,7 +18,8 @@ class Vm {
 
 	/**
 		Runs firedancer bytecode for a specific actor.
-		@return The end code. `0` at default, or any value specified in `End` instruction.
+		@return The end code. `0` at default, or any other value specified by `End` opcode
+		(including a special value `-1` which means that the actor should vanish).
 	**/
 	public static function run(
 		programTable: RVec<Program>,
