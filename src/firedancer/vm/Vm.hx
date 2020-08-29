@@ -125,8 +125,6 @@ class Vm {
 						endCode = scan.int();
 						deactivateAllThreads = true;
 						break;
-					case NoOperation:
-						// Does nothing
 
 					case LoadIntCR:
 						reg.int = scan.int();

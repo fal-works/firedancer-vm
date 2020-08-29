@@ -22,7 +22,6 @@ enum abstract GeneralOperation(Int) to Int {
 		case GeneralOperation.UseThreadS: UseThreadS;
 		case GeneralOperation.AwaitThread: AwaitThread;
 		case GeneralOperation.End: End;
-		case GeneralOperation.NoOperation: NoOperation;
 
 		case GeneralOperation.LoadIntCR: LoadIntCR;
 		case GeneralOperation.LoadIntBR: LoadIntBR;
@@ -118,11 +117,6 @@ enum abstract GeneralOperation(Int) to Int {
 		Ends running program and returns an end code specified by an immediate integer.
 	**/
 	final End;
-
-	/**
-		Does nothing.
-	**/
-	final NoOperation;
 
 	// ---- load values -------------------------------------------------
 
@@ -345,7 +339,6 @@ class GeneralOperationExtension {
 		case UseThreadS: "use_thread_s";
 		case AwaitThread: "await_thread";
 		case End: "end";
-		case NoOperation: "no_operation";
 
 		case LoadIntCR: "load_int_cr";
 		case LoadIntBR: "load_int_vr";
