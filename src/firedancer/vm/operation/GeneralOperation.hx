@@ -22,11 +22,16 @@ enum abstract GeneralOperation(Int) to Int {
 		case GeneralOperation.UseThreadS: UseThreadS;
 		case GeneralOperation.AwaitThread: AwaitThread;
 		case GeneralOperation.End: End;
+		case GeneralOperation.NoOperation: NoOperation;
 
 		case GeneralOperation.LoadIntCR: LoadIntCR;
+		case GeneralOperation.LoadIntBR: LoadIntBR;
 		case GeneralOperation.LoadFloatCR: LoadFloatCR;
+		case GeneralOperation.LoadFloatBR: LoadFloatBR;
 		case GeneralOperation.LoadVecCR: LoadVecCR;
+		case GeneralOperation.SaveIntC: SaveIntC;
 		case GeneralOperation.SaveIntR: SaveIntR;
+		case GeneralOperation.SaveFloatC: SaveFloatC;
 		case GeneralOperation.SaveFloatR: SaveFloatR;
 		case GeneralOperation.LoadIntVR: LoadIntVR;
 		case GeneralOperation.LoadFloatVR: LoadFloatVR;
