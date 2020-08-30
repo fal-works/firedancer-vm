@@ -68,8 +68,8 @@ class ProgramPackage {
 		Converts `this` to JSON string.
 	**/
 	public function toString(): String {
-		final nameIdMap = new Map<String, UInt>();
-		this.nameIdMap.forEach((key, value) -> nameIdMap.set(key, value));
+		final nameIdMap:Dynamic = {};
+		this.nameIdMap.forEach((key, value) -> Reflect.setField(nameIdMap, key, value));
 		final programTable = this.programTable.ref.map(Program.serialize).toArray();
 
 		final obj: ProgramPackageObject = {
