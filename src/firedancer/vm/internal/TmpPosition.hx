@@ -26,6 +26,18 @@ class TmpPosition {
 	**/
 	public var y: Float;
 
+	#if firedancer_use_actor_class
+	/**
+		Sets position values according to `x`, `y` and `originPositionRef`.
+
+		If `originPositionRef` is no more valid, also unlinks it from `actor`.
+
+		@param x The x-coordinate of the current absolute position.
+		@param y The y-coordinate of the current absolute position.
+		@param originPositionRef The reference to the origin point.
+		@param actor The actor.
+	**/
+	#else
 	/**
 		Sets position values according to `x`, `y` and `originPositionRef`.
 
@@ -37,12 +49,17 @@ class TmpPosition {
 		@param originPositionRefVec The vector that contains `originPositionRef`.
 		@param vecIndex The index of `originPositionRef` in `originPositionRefVec`.
 	**/
+	#end
 	public #if !js extern #end inline function new(
 		x: Float,
 		y: Float,
 		originPositionRef: Maybe<PositionRef>,
+		#if firedancer_use_actor_class
+		actor: Actor
+		#else
 		originPositionRefVec: Vec<Maybe<PositionRef>>,
 		vecIndex: UInt
+		#end
 	) {
 		if (originPositionRef.isNone()) {
 			this.originX = this.originY = 0.0;
@@ -56,7 +73,11 @@ class TmpPosition {
 				this.x = x - this.originX;
 				this.y = y - this.originY;
 			} else {
+				#if firedancer_use_actor_class
+				actor.originPositionRef = Maybe.none();
+				#else
 				originPositionRefVec[vecIndex] = Maybe.none();
+				#end
 				this.originX = this.originY = 0.0;
 				this.x = x;
 				this.y = y;

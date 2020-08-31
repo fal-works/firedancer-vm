@@ -26,16 +26,34 @@ class Vm {
 		eventHandler: EventHandler,
 		threads: ThreadList,
 		memoryCapacity: UInt,
-		xVec: Vec<Float>,
-		yVec: Vec<Float>,
-		vxVec: Vec<Float>,
-		vyVec: Vec<Float>,
-		originPositionRefVec: Vec<Maybe<PositionRef>>,
-		vecIndex: UInt,
+		#if firedancer_use_actor_class actor: Actor, #else xVec: Vec<Float>,
+		yVec: Vec<Float>, vxVec: Vec<Float>, vyVec: Vec<Float>,
+		originPositionRefVec: Vec<Maybe<PositionRef>>, vecIndex: UInt,
+		#end
 		emitter: Emitter,
 		thisPositionRef: PositionRef,
 		targetPositionRef: PositionRef
 	): Int {
+		#if firedancer_use_actor_class
+		final originPositionRef = actor.originPositionRef;
+		final position = new TmpPosition(
+			actor.x,
+			actor.y,
+			originPositionRef,
+			actor
+		);
+		final velocity = new TmpVelocity(actor.vx, actor.vy);
+
+		inline function updatePositionAndVelocity(): Void {
+			position.x += velocity.x;
+			position.y += velocity.y;
+
+			actor.x = position.getAbsoluteX();
+			actor.y = position.getAbsoluteY();
+			actor.vx = velocity.x;
+			actor.vy = velocity.y;
+		}
+		#else
 		final originPositionRef = originPositionRefVec[vecIndex];
 		final position = new TmpPosition(
 			xVec[vecIndex],
@@ -55,6 +73,7 @@ class Vm {
 			vxVec[vecIndex] = velocity.x;
 			vyVec[vecIndex] = velocity.y;
 		}
+		#end
 
 		final scan = new Scanner();
 		final reg = new DataRegisterFile();
@@ -650,12 +669,16 @@ class Vm {
 		final threads = new ThreadList(1, memoryCapacity);
 		final bytecode = pkg.getProgramByName(entryBytecodeName);
 		threads.set(bytecode);
+		#if firedancer_use_actor_class
+		final actor = new Actor();
+		#else
 		final xVec = Vec.fromArrayCopy([0.0]);
 		final yVec = Vec.fromArrayCopy([0.0]);
 		final vxVec = Vec.fromArrayCopy([0.0]);
 		final vyVec = Vec.fromArrayCopy([0.0]);
 		final originPositionRefVec: Vec<Maybe<PositionRef>> = new Vec(UInt.one);
 		final vecIndex = UInt.zero;
+		#end
 		final emitter = Emitter.createNull();
 		final targetPositionRef = PositionRef.createZero();
 
@@ -670,12 +693,11 @@ class Vm {
 				eventHandler,
 				threads,
 				memoryCapacity,
-				xVec,
-				yVec,
-				vxVec,
-				vyVec,
-				originPositionRefVec,
-				vecIndex,
+				#if firedancer_use_actor_class
+				actor,
+				#else
+				xVec, yVec, vxVec, vyVec, originPositionRefVec, vecIndex,
+				#end
 				emitter,
 				PositionRef.createZero(),
 				targetPositionRef

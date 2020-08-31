@@ -21,6 +21,13 @@ Valid values:
 - `heaps_BatchElement` for using `h2d.SpriteBatch.BatchElement`
 - Otherwise uses an anonymous structure `{ x: Float, y: Float }`
 
+### `-D firedancer_use_actor_class
+
+Enables to use `Actor` class instead of the default SoA (Structure of Arrays) style.
+
+*(Not yet tested)*
+
+
 ### `-D firedancer_debug`
 
 Throws error if:
