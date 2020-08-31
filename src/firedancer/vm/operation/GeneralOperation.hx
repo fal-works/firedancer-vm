@@ -43,6 +43,7 @@ enum abstract GeneralOperation(Int) to Int {
 		case GeneralOperation.PushIntR: PushIntR;
 		case GeneralOperation.PushFloatC: PushFloatC;
 		case GeneralOperation.PushFloatR: PushFloatR;
+		case GeneralOperation.PushVecC: PushVecC;
 		case GeneralOperation.PushVecR: PushVecR;
 		case GeneralOperation.PopInt: PopInt;
 		case GeneralOperation.PopFloat: PopFloat;
@@ -230,6 +231,11 @@ enum abstract GeneralOperation(Int) to Int {
 	final PushFloatR;
 
 	/**
+		Push (vec immediate) -> (stack)
+	**/
+	final PushVecC;
+
+	/**
 		Push (vec register) -> (stack)
 	**/
 	final PushVecR;
@@ -360,6 +366,7 @@ class GeneralOperationExtension {
 		case PushIntR: "push_int_r";
 		case PushFloatC: "push_float_c";
 		case PushFloatR: "push_float_r";
+		case PushVecC: "push_vec_c";
 		case PushVecR: "push_Vec_r";
 		case PopInt: "pop_int";
 		case PopFloat: "pop_float";

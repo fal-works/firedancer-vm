@@ -165,6 +165,8 @@ class Vm {
 						mem.pushFloat(scan.float());
 					case PushFloatR:
 						mem.pushFloat(reg.float);
+					case PushVecC:
+						mem.pushVec(scan.float(), scan.float());
 					case PushVecR:
 						mem.pushVec(reg.vecX, reg.vecY);
 					case PopInt:
