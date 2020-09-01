@@ -25,6 +25,7 @@ class Vm {
 		// @formatter:off
 		programTable: Vector<Program>,
 		eventHandler: EventHandler,
+		emitter: Emitter,
 		memoryCapacity: UInt,
 		#if firedancer_use_actor_class
 		actor: Actor,
@@ -36,14 +37,14 @@ class Vm {
 		vyVec: WritableVector<Float>,
 		originPositionRefVec: WritableVector<Maybe<PositionRef>>,
 		vecIndex: UInt,
-		#end
-		emitter: Emitter,
 		thisPositionRef: PositionRef,
+		#end
 		targetPositionRef: PositionRef
 		// @formatter:on
 	): Int {
 		#if firedancer_use_actor_class
 		final threads = actor.threads;
+		final thisPositionRef = actor.thisPositionRef;
 		final originPositionRef = actor.originPositionRef;
 		final position = new TmpPosition(
 			actor.x,
@@ -675,11 +676,14 @@ class Vm {
 		memoryCapacity: UInt = 256
 	): Void {
 		final eventHandler = EventHandler.createNull();
+		final emitter = Emitter.createNull();
 		final threads = new ThreadList(1, memoryCapacity);
 		final bytecode = pkg.getProgramByName(entryBytecodeName);
 		threads.set(bytecode);
+		final thisPositionRef = PositionRef.createZero();
+
 		#if firedancer_use_actor_class
-		final actor = new Actor(threads);
+		final actor = new Actor(threads, thisPositionRef);
 		#else
 		final xVec = WritableVector.fromArrayCopy([0.0]);
 		final yVec = WritableVector.fromArrayCopy([0.0]);
@@ -688,7 +692,7 @@ class Vm {
 		final originPositionRefVec: WritableVector<Maybe<PositionRef>> = new WritableVector(UInt.one);
 		final vecIndex = UInt.zero;
 		#end
-		final emitter = Emitter.createNull();
+
 		final targetPositionRef = PositionRef.createZero();
 
 		var frame = UInt.zero;
@@ -700,12 +704,11 @@ class Vm {
 			Vm.run(
 				pkg.programTable,
 				eventHandler,
+				emitter,
 				memoryCapacity,
 				#if firedancer_use_actor_class actor, #else threads, xVec, yVec, vxVec, vyVec,
-				originPositionRefVec, vecIndex,
+				originPositionRefVec, vecIndex, thisPositionRef,
 				#end
-				emitter,
-				PositionRef.createZero(),
 				targetPositionRef
 			);
 			++frame;
