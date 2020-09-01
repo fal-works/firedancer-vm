@@ -7,6 +7,8 @@ package firedancer.vm;
 	Available only `#if firedancer_use_actor_class`.
 **/
 class Actor {
+	public final threads: ThreadList;
+
 	public var x: Float;
 	public var y: Float;
 	public var vx: Float;
@@ -14,7 +16,8 @@ class Actor {
 
 	public var originPositionRef: Maybe<PositionRef>;
 
-	public function new() {
+	public function new(threads: ThreadList) {
+		this.threads = threads;
 		this.x = 0.0;
 		this.y = 0.0;
 		this.vx = 0.0;

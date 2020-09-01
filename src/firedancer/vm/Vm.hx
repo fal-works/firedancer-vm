@@ -25,11 +25,11 @@ class Vm {
 		// @formatter:off
 		programTable: Vector<Program>,
 		eventHandler: EventHandler,
-		threads: ThreadList,
 		memoryCapacity: UInt,
 		#if firedancer_use_actor_class
 		actor: Actor,
 		#else
+		threads: ThreadList,
 		xVec: WritableVector<Float>,
 		yVec: WritableVector<Float>,
 		vxVec: WritableVector<Float>,
@@ -43,6 +43,7 @@ class Vm {
 		// @formatter:on
 	): Int {
 		#if firedancer_use_actor_class
+		final threads = actor.threads;
 		final originPositionRef = actor.originPositionRef;
 		final position = new TmpPosition(
 			actor.x,
@@ -678,7 +679,7 @@ class Vm {
 		final bytecode = pkg.getProgramByName(entryBytecodeName);
 		threads.set(bytecode);
 		#if firedancer_use_actor_class
-		final actor = new Actor();
+		final actor = new Actor(threads);
 		#else
 		final xVec = WritableVector.fromArrayCopy([0.0]);
 		final yVec = WritableVector.fromArrayCopy([0.0]);
@@ -699,9 +700,8 @@ class Vm {
 			Vm.run(
 				pkg.programTable,
 				eventHandler,
-				threads,
 				memoryCapacity,
-				#if firedancer_use_actor_class actor, #else xVec, yVec, vxVec, vyVec,
+				#if firedancer_use_actor_class actor, #else threads, xVec, yVec, vxVec, vyVec,
 				originPositionRefVec, vecIndex,
 				#end
 				emitter,
