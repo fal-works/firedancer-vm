@@ -1,7 +1,6 @@
 # Firedancer VM
 
-Virtual machine for [**Firedancer**](https://github.com/fal-works/firedancer), a Haxe based language for defining 2D shmup bullet-hell patterns. 
-
+Virtual machine for [**Firedancer**](https://github.com/fal-works/firedancer), a Haxe based language for defining 2D shmup bullet-hell patterns.
 
 ## Compiler flags
 
@@ -25,8 +24,7 @@ Valid values:
 
 Enables to use `Actor` class instead of the default SoA (Structure of Arrays) style.
 
-*(Not yet tested)*
-
+(*Not yet tested*)
 
 ### `-D firedancer_debug`
 
@@ -37,12 +35,10 @@ Throws error if:
 
 Automatically set `#if debug`.
 
-
 ## Dependencies
 
-- [sinker](https://github.com/fal-works/sinker) v0.4.0 or compatible
-- [sneaker](https://github.com/fal-works/sneaker) v0.10.0 or compatible
-- [ripper](https://github.com/fal-works/ripper) v0.4.0 or compatible
+- [sinker](https://github.com/fal-works/sinker) v0.5.0 or compatible
+- [sneaker](https://github.com/fal-works/sneaker) v0.11.0 or compatible
 - [banker](https://github.com/fal-works/banker) v0.7.0 or compatible
 - [reckoner](https://github.com/fal-works/banker) v0.2.0 or compatible
 
