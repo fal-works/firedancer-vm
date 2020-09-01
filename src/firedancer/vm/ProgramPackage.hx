@@ -53,6 +53,17 @@ class ProgramPackage {
 	}
 
 	/**
+		@return `Program` registered with `id`.
+	**/
+	public function getProgramById(id: UInt): Program {
+		#if firedancer_debug
+		if (this.programTable.length <= id) throw 'Invalid program ID: $id';
+		#end
+
+		return this.programTable[id];
+	}
+
+	/**
 		@return `Program` registered with `name`.
 	**/
 	public function getProgramByName(name: String): Program {
