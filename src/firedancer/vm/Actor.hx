@@ -31,5 +31,11 @@ class Actor {
 		this.thisPositionRef = thisPositionRef;
 		this.originPositionRef = Maybe.none();
 	}
+
+	/**
+		Sets `program` for `this` actor.
+	**/
+	public inline function setProgram(program: Program): Void
+		this.threads.set(program);
 }
 #end
