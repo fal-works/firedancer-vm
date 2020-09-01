@@ -1,8 +1,8 @@
 package firedancer.vm;
 
-import banker.vector.Vector as RVec;
-import banker.vector.WritableVector as Vec;
 import reckoner.Random;
+import banker.vector.Vector;
+import banker.vector.WritableVector;
 import firedancer.vm.Constants.*;
 import firedancer.vm.operation.GeneralOperation;
 import firedancer.vm.operation.CalcOperation;
@@ -22,17 +22,25 @@ class Vm {
 		(including a special value `-1` which means that the actor should vanish).
 	**/
 	public static function run(
-		programTable: RVec<Program>,
+		// @formatter:off
+		programTable: Vector<Program>,
 		eventHandler: EventHandler,
 		threads: ThreadList,
 		memoryCapacity: UInt,
-		#if firedancer_use_actor_class actor: Actor, #else xVec: Vec<Float>,
-		yVec: Vec<Float>, vxVec: Vec<Float>, vyVec: Vec<Float>,
-		originPositionRefVec: Vec<Maybe<PositionRef>>, vecIndex: UInt,
+		#if firedancer_use_actor_class
+		actor: Actor,
+		#else
+		xVec: WritableVector<Float>,
+		yVec: WritableVector<Float>,
+		vxVec: WritableVector<Float>,
+		vyVec: WritableVector<Float>,
+		originPositionRefVec: WritableVector<Maybe<PositionRef>>,
+		vecIndex: UInt,
 		#end
 		emitter: Emitter,
 		thisPositionRef: PositionRef,
 		targetPositionRef: PositionRef
+		// @formatter:on
 	): Int {
 		#if firedancer_use_actor_class
 		final originPositionRef = actor.originPositionRef;
@@ -672,11 +680,11 @@ class Vm {
 		#if firedancer_use_actor_class
 		final actor = new Actor();
 		#else
-		final xVec = Vec.fromArrayCopy([0.0]);
-		final yVec = Vec.fromArrayCopy([0.0]);
-		final vxVec = Vec.fromArrayCopy([0.0]);
-		final vyVec = Vec.fromArrayCopy([0.0]);
-		final originPositionRefVec: Vec<Maybe<PositionRef>> = new Vec(UInt.one);
+		final xVec = WritableVector.fromArrayCopy([0.0]);
+		final yVec = WritableVector.fromArrayCopy([0.0]);
+		final vxVec = WritableVector.fromArrayCopy([0.0]);
+		final vyVec = WritableVector.fromArrayCopy([0.0]);
+		final originPositionRefVec: WritableVector<Maybe<PositionRef>> = new WritableVector(UInt.one);
 		final vecIndex = UInt.zero;
 		#end
 		final emitter = Emitter.createNull();
@@ -693,10 +701,8 @@ class Vm {
 				eventHandler,
 				threads,
 				memoryCapacity,
-				#if firedancer_use_actor_class
-				actor,
-				#else
-				xVec, yVec, vxVec, vyVec, originPositionRefVec, vecIndex,
+				#if firedancer_use_actor_class actor, #else xVec, yVec, vxVec, vyVec,
+				originPositionRefVec, vecIndex,
 				#end
 				emitter,
 				PositionRef.createZero(),
