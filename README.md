@@ -95,7 +95,7 @@ Automatically set `#if debug`.
 
 - [sinker](https://github.com/fal-works/sinker) v0.5.0 or compatible
 - [sneaker](https://github.com/fal-works/sneaker) v0.11.0 or compatible
-- [banker](https://github.com/fal-works/banker) v0.7.0 or compatible
+- [banker](https://github.com/fal-works/banker) v0.7.1 or compatible
 - [reckoner](https://github.com/fal-works/banker) v0.2.0 or compatible
 
 See also:
