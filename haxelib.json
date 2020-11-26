@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"tags": ["game"],
 	"description": "Virtual machine for Firedancer, a Haxe based language for defining 2D shmup bullet-hell patterns.",
-	"version": "0.1.0",
+	"version": "0.2.0-alpha",
 	"classPath": "src/",
 	"releasenote": "Initial release. Everything may change in future.",
 	"contributors": [
