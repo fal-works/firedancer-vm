@@ -41,6 +41,14 @@ abstract ThreadList(Vector<Thread>) {
 	}
 
 	/**
+		Calls either `set()` or `reset()`.
+	**/
+	public extern inline function setMaybe(program: Maybe<Program>): Void {
+		if (program.isSome()) set(program.unwrap());
+		else reset();
+	}
+
+	/**
 		Finds the first available sub-thread and activates it with given program.
 
 		Throws error if no available sub-thread is found.
