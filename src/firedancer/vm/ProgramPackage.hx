@@ -55,12 +55,29 @@ class ProgramPackage {
 	/**
 		@return `Program` registered with `id`.
 	**/
+	public function tryGetProgramById(id: UInt): Maybe<Program>
+		return if (id < this.programTable.length) this.programTable[id] else Maybe.none();
+
+	/**
+		@return `Program` registered with `id`.
+	**/
 	public function getProgramById(id: UInt): Program {
 		#if firedancer_debug
 		if (this.programTable.length <= id) throw 'Invalid program ID: $id';
 		#end
 
 		return this.programTable[id];
+	}
+
+	/**
+		@return `Program` registered with `name`.
+	**/
+	public function tryGetProgramByName(name: String): Maybe<Program> {
+		return if (this.nameIdMap.hasKey(name)) {
+			this.programTable[this.nameIdMap.get(name)];
+		} else {
+			Maybe.none();
+		}
 	}
 
 	/**
@@ -79,7 +96,7 @@ class ProgramPackage {
 		Converts `this` to JSON string.
 	**/
 	public function toString(): String {
-		final nameIdMap:Dynamic = {};
+		final nameIdMap: Dynamic = {};
 		this.nameIdMap.forEach((key, value) -> Reflect.setField(nameIdMap, key, value));
 		final programTable = this.programTable.ref.map(Program.serialize).toArray();
 
